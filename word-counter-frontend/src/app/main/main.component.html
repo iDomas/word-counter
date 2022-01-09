@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+  <h1>Word Counter</h1>
+</mat-toolbar>
+
+<mat-sidenav-container class="container">
+  <mat-sidenav #snav [mode]="'side'" fixedTopGap="56">
+    <div>
+      <input type="file" (change)="fileUpload($event)" multiple>
+    </div>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="." *ngFor="let nav of targetTxt; let i = index" (click)="setActiveView(i)">{{nav}}</a>
+      <a *ngIf="resultFiles.length !== 0" mat-list-item routerLink="." (click)="download()">Download</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <h1 *ngIf="resultFiles.length === 0">Open sidenav and upload files...</h1>
+    <div *ngIf="resultFiles.length !== 0">
+      <div *ngFor="let resultData of resultFiles; let i = index">
+        <app-result-view *ngIf="activeView === i" [resultData]="resultData"></app-result-view>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
